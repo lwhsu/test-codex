@@ -6,9 +6,17 @@ configured with `cloud-init` for a ready-to-use `codex` user.
 
 ## Usage
 
-1. Run `./freebsd-setup.sh`.
+1. Run `./freebsd-setup.sh`. The current directory will be shared with the VM.
 2. Once booted, connect via `ssh codex@localhost -p 2222` (password `codex`).
-3. Shutdown the VM with `sudo shutdown -p now` inside the guest.
+3. Inside the VM, mount the shared directory and run tests:
+
+   ```sh
+   sudo mkdir -p /workspace
+   sudo mount -t virtfs workspace /workspace
+   cd /workspace
+   ./all.sh
+   ```
+4. Shutdown the VM with `sudo shutdown -p now` inside the guest.
 
 ## Details
 
