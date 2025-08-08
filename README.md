@@ -2,6 +2,10 @@
 
 This repository contains simple shell scripts and helpers for running tests.
 
+## Running tests
+
+Run `./all.sh` directly or invoke `make` to execute the default test script.
+
 ## FreeBSD Development Environment
 
 We provide a script to launch a FreeBSD 14.3-RELEASE virtual machine inside the
