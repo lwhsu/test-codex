@@ -8,6 +8,9 @@ FREEBSD_VERSION="14.3-RELEASE"
 IMAGE_NAME="FreeBSD-${FREEBSD_VERSION}-amd64-BASIC-CLOUDINIT-ufs.qcow2"
 IMAGE_URL="https://download.freebsd.org/releases/VM-IMAGES/${FREEBSD_VERSION}/amd64/Latest/${IMAGE_NAME}.xz"
 
+# Share the current working directory with the VM so builds/tests can run inside
+HOST_DIR="${HOST_DIR:-$(pwd)}"
+
 # Ensure required packages are present
 if ! command -v qemu-system-x86_64 >/dev/null 2>&1; then
   echo "Installing qemu-system-x86, qemu-utils and cloud-image-utils"
@@ -46,4 +49,5 @@ qemu-system-x86_64 \
   -drive if=virtio,file="${IMAGE_NAME}",format=qcow2 \
   -drive if=virtio,file=user-data.img,format=raw \
   -nic user,model=virtio-net-pci,hostfwd=tcp::2222-:22 \
+  -virtfs local,path="${HOST_DIR}",mount_tag=workspace,security_model=none \
   -nographic
